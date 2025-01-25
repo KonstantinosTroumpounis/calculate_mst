@@ -3,6 +3,6 @@ import react from '@vitejs/plugin-react-swc'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/calculate_mst/dist/',
   plugins: [react()],
+  base: "https://konstantinostroumpounis.github.io/calculate_mst/",
 })
