@@ -340,7 +340,6 @@ function GraphCustomize(props) {
                     type="primary"
                     style={{ marginRight: '10px' }}
                     onClick={() => setShowKruskal(true)}
-                    // disabled={buildGraphModal == false}
                 >
                     Kruskal
                 </Button>
