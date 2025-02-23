@@ -86,7 +86,7 @@ function GraphTheory(props) {
                             // console.log("Reverse route found:", ref)
                             return true; // Stop iteration
                         }
-                        return false; // Continue iteration
+                        return false;
                     });
                     
                     const source = reverseExists ? edge.target : edge.source;
