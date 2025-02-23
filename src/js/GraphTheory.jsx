@@ -11,6 +11,7 @@ function GraphTheory(props) {
     const [saveWeights, setSaveWeights] = useState([])
     const [primResults, setPrimResults] = useState([])
     const [kruskalResults, setKruskalResults] = useState([])
+    const [totalWeigthsAre, setTotalWeightsAre] = useState(0)
 
     useEffect(() => {
     // Initialize Cytoscape after component mounts
@@ -90,6 +91,7 @@ function GraphTheory(props) {
                     
                     const source = reverseExists ? edge.target : edge.source;
                     const target = reverseExists ? edge.source : edge.target;
+
                     return {
                         data: {
                             id: `${source}-${target}`, // Unique ID for the edge
@@ -103,12 +105,15 @@ function GraphTheory(props) {
                 setPrimResults(elements)
                 console.log('elements :', elements)
                 if (props.primStarting.option === "finalGraph") {
+                    let sumWeight = elements.reduce((acc, edge) => acc + edge.data.weight, 0);
                     elements.map((edge) => {
                         cy.$(`#${edge.data.id}`).style({
                             'line-color': 'orange',
                             'label': edge.data.weight,
                         });
                     })
+
+                    setTotalWeightsAre(sumWeight);
                 }
                 
                 //TODO: Works if we want to erase the previous graph
@@ -172,12 +177,15 @@ function GraphTheory(props) {
         console.log('kruskalElements are :', kruskalElements)
         setKruskalResults(kruskalElements)
         if (props.kruskalConfigurations.option === "finalGraph") {
+            let sumWeight = kruskalElements.reduce((acc, edge) => acc + edge.data.weight, 0);
             kruskalElements.map((edge) => {
                 cy.$(`#${edge.data.id}`).style({
                     'line-color': 'orange',
                     'label': edge.data.weight,
                 });
             })
+
+            setTotalWeightsAre(sumWeight);
         }
     }, [props.kruskalConfigurations])
 
@@ -419,6 +427,7 @@ function GraphTheory(props) {
     };
 
     const kruskalAlgorithm = () => {
+        setTotalWeightsAre(0);
         let totalGraphPath = []
         let mst = []
         const parent = {};
@@ -455,6 +464,7 @@ function GraphTheory(props) {
             'label': selectedAlg[step].data.weight,
         });
         setStep(step + 1);
+        setTotalWeightsAre(prevTotal => prevTotal + selectedAlg[step].data.weight);
     }
 
     const resetColorGraphAfterChangeStartingPoint = () => {
@@ -464,6 +474,7 @@ function GraphTheory(props) {
             });
         });
         setStep(0)
+        setTotalWeightsAre(0);
     }
 
     const triggerClearGraph = () => {
@@ -472,7 +483,6 @@ function GraphTheory(props) {
         props.cleanPrimStatesAfterTerminate();
     }
 
-    // TODO: Apply prim on build graph ----> SOLVED
     // TODO: Disable the random graph maybe after the selection of the build graph
     // TODO: After Generate graoh allow user to build a graph without page blank ----> SOLVED
     // TODO: Erase the colors of the graph after the algorithm finish and the build graph occured
@@ -489,12 +499,14 @@ function GraphTheory(props) {
                     <div style={{ position: 'absolute', top: '10px', left: '10px', backgroundColor: 'white', padding: '5px', zIndex: 10 }}>
                         <Tag style={{marginTop: 5}} color="cyan">Prim's Algorithm</Tag>
                         <Tag style={{marginTop: 5}} color="green">Source: {props.primStarting.startingNode}</Tag>
+                        <Tag style={{marginTop: 5}} color="red">Weights: {totalWeigthsAre}</Tag>
                     </div>
                 }
                 {
                     (props.kruskalConfigurations.option == "stepByStep" || props.kruskalConfigurations.option == "finalGraph") &&
                     <div style={{ position: 'absolute', top: '10px', left: '10px', backgroundColor: 'white', padding: '5px', zIndex: 10 }}>
                         <Tag style={{marginTop: 5}} color="cyan">Kruskal's Algorithm</Tag>
+                        <Tag style={{marginTop: 5}} color="red">Weights: {totalWeigthsAre}</Tag>
                     </div>
                 }
             </div>
