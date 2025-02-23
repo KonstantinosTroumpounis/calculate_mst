@@ -95,9 +95,9 @@ function GraphTheory(props) {
                     return {
                         data: {
                             id: `${source}-${target}`, // Unique ID for the edge
-                            source: source, // ID of the source node
-                            target: target, // ID of the target node
-                            weight: edge.weight // Weight of the edge
+                            source: source,
+                            target: target,
+                            weight: edge.weight
                         }
                     }
                 });
