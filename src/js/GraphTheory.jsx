@@ -491,7 +491,7 @@ function GraphTheory(props) {
     return (
         <>
             
-            <div id="cy" style={{ width: 'auto', height: '650px', backgroundColor: 'white' }}>
+            <div id="cy" style={{ width: '100%', height: '650px', backgroundColor: 'white' }}>
                 {
                     (props.primStarting.option == "stepByStep" || props.primStarting.option == "finalGraph") &&
                     <div style={{ position: 'absolute', top: '10px', left: '10px', backgroundColor: 'white', padding: '5px', zIndex: 10 }}>

@@ -89,7 +89,7 @@ function App() {
                 >
                     <Row gutter={[16, 16]}>
                         <Col xs={24} sm={24} md={24} lg={8} xl={6}>
-                            <Sider style={{ background: '#F5F5F5', padding: '16px' }} width={400}>
+                            <Sider style={{ background: '#F5F5F5', padding: '16px', width: '100%' }} width={400}>
                                 <GraphCustomize 
                                     addNodePressed={addNodePressed}
                                     finishCustomize={finishCustomize}
@@ -101,7 +101,7 @@ function App() {
                                 />
                             </Sider>
                         </Col>
-                        <Col xs={24} sm={24} md={24} lg={16} xl={18}>
+                        <Col xs={24} sm={24} md={24} lg={18} xl={18}>
                             <Content style={{ padding: '16px' }}>
                                 <GraphTheory
                                     nodeAdded={addNode}
