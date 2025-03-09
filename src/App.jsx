@@ -5,6 +5,7 @@ import GraphCustomize from './js/GraphCustomize';
 
 function App() {
     const [addNode, setAddNode] = useState(false)
+    const [finishCustomize, setFinishCustomize] = useState(false)
     const [buildOwnGraphPressed, setbuildOwnGraphPressed] = useState(false)
     const [randomGraph, setRandomGraph] = useState({
         numberOfNodes: undefined,
@@ -23,6 +24,7 @@ function App() {
     const [kruskalAlg, setKruskalAlg] = useState({
         options: undefined
     })
+
     const { Header, Content, Sider, Footer } = Layout;
 
     const addNodePressed = () => {
@@ -34,6 +36,7 @@ function App() {
     }
 
     const randomGraphCustomize = (data) => {
+        setFinishCustomize(true)
         setRandomGraph({
             numberOfNodes: data.nodes,
             numberOfVertices: data.probEdges,
@@ -42,6 +45,7 @@ function App() {
     }
 
     const buildGraphCustomize = (data) => {
+        setFinishCustomize(true)
         setEdgesAndWeights({
             fromNode: data.fromNode,
             untilNode: data.untilNode,
@@ -62,46 +66,43 @@ function App() {
         })
     }
 
-    const cleanPrimStatesAfterTerminate = () => {
+    const cleanAlgorithmStatesAfterTerminate = () => {
         setStarterPrim({
             startingNode: undefined,
             options: undefined
         })
-    }
-
-    const cleanKruskalStatesAfterTerminate = () => {
         setKruskalAlg({
             options: undefined
         })
+        setFinishCustomize(false)
     }
     
 
     return (
-        <Layout>
+        <Layout  style={{ minHeight: '100vh' }}>
             <Header style={{ display: 'flex', alignItems: 'center' }}>
                 <span style={{color: 'white'}}>Minimun Spanning Tree</span>
             </Header>
-            <Content style={{ padding: '0 48px', background: '#F5F5F5' }}>
+            <Content style={{ padding: '0 24px', background: '#F5F5F5' }}>
                 <Layout
-                    style={{ padding: '24px 0' }}
+                    style={{ flex: 1 }}
                 >
                     <Row gutter={[16, 16]}>
                         <Col xs={24} sm={24} md={24} lg={8} xl={6}>
-                            <Sider style={{ background: '#F5F5F5' }} width={400}>
+                            <Sider style={{ background: '#F5F5F5', padding: '16px' }} width={400}>
                                 <GraphCustomize 
                                     addNodePressed={addNodePressed}
+                                    finishCustomize={finishCustomize}
                                     insertEdgesWeightsPressed={insertEdgesWeightsPressed}
                                     randomGraphCustomize={randomGraphCustomize}
                                     buildGraphCustomize={buildGraphCustomize}
                                     primStartingPoint={primStartingPoint}
                                     kruskalConfigurations={kruskalConfigurations}
-                                    cleanPrimStatesAfterTerminate = {cleanPrimStatesAfterTerminate}
-                                    cleanKruskalStatesAfterTerminate={cleanKruskalStatesAfterTerminate}
                                 />
                             </Sider>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={16} xl={18}>
-                            <Content>
+                            <Content style={{ padding: '16px' }}>
                                 <GraphTheory
                                     nodeAdded={addNode}
                                     addNodePressed={addNodePressed}
@@ -111,7 +112,7 @@ function App() {
                                     edgesAndWeights={edgesAndWeights}
                                     primStarting={starterPrim}
                                     kruskalConfigurations={kruskalAlg}
-                                    cleanPrimStatesAfterTerminate={cleanPrimStatesAfterTerminate}
+                                    cleanAlgorithmStatesAfterTerminate={cleanAlgorithmStatesAfterTerminate}
                                 />
                             </Content>
                         </Col>
@@ -119,7 +120,7 @@ function App() {
                 </Layout>
             </Content>
             <Footer style={{ textAlign: 'center', background: '#F5F5F5' }}>
-                TrueBee ©{new Date().getFullYear()} Created by TrueBee team
+                ©{new Date().getFullYear()}
             </Footer>
         </Layout>
     )

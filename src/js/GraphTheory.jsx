@@ -105,7 +105,7 @@ function GraphTheory(props) {
                 setPrimResults(elements)
                 console.log('elements :', elements)
                 if (props.primStarting.option === "finalGraph") {
-                    let sumWeight = elements.reduce((acc, edge) => acc + edge.data.weight, 0);
+                    let sumWeight = elements.reduce((acc, edge) => acc + parseInt(edge.data.weight), 0);
                     elements.map((edge) => {
                         cy.$(`#${edge.data.id}`).style({
                             'line-color': 'orange',
@@ -114,6 +114,13 @@ function GraphTheory(props) {
                     })
 
                     setTotalWeightsAre(sumWeight);
+
+                    return (
+                        notification.success({
+                            message: `Prim algorithm finished`,
+                            duration: 5
+                          })
+                    ) 
                 }
                 
                 //TODO: Works if we want to erase the previous graph
@@ -177,7 +184,7 @@ function GraphTheory(props) {
         console.log('kruskalElements are :', kruskalElements)
         setKruskalResults(kruskalElements)
         if (props.kruskalConfigurations.option === "finalGraph") {
-            let sumWeight = kruskalElements.reduce((acc, edge) => acc + edge.data.weight, 0);
+            let sumWeight = kruskalElements.reduce((acc, edge) => acc + parseInt(edge.data.weight), 0);
             kruskalElements.map((edge) => {
                 cy.$(`#${edge.data.id}`).style({
                     'line-color': 'orange',
@@ -195,14 +202,6 @@ function GraphTheory(props) {
         }
     }, [props.randomGraph])
 
-    // * Clearing state of Prim after terminate. 
-    // TODO: See first if this is necessary 29/12
-    // TODO: Error appear (Edge not found -> have to handle it)
-    // useEffect(() => {
-    //     if (step >= primResults.length) {
-    //         props.cleanPrimStatesAfterTerminate();
-    //     }
-    // }, [step]);
 
     const addNode = () => {
         let nodeNames = cy.nodes().map(node => node.id());
@@ -447,9 +446,9 @@ function GraphTheory(props) {
             }
         
             // Stop early if the MST is complete
-            if (mst.length === saveWeights.length - 1) {
-              break;
-            }
+            // if (mst.length === saveWeights.length - 1) {
+            //   break;
+            // }
         }
 
         return mst
@@ -464,7 +463,7 @@ function GraphTheory(props) {
             'label': selectedAlg[step].data.weight,
         });
         setStep(step + 1);
-        setTotalWeightsAre(prevTotal => prevTotal + selectedAlg[step].data.weight);
+        setTotalWeightsAre(prevTotal => prevTotal + parseInt(selectedAlg[step].data.weight));
     }
 
     const resetColorGraphAfterChangeStartingPoint = () => {
@@ -480,33 +479,44 @@ function GraphTheory(props) {
     const triggerClearGraph = () => {
         cy.elements().remove();
         setCurrentLetter('`');
-        props.cleanPrimStatesAfterTerminate();
+        props.cleanAlgorithmStatesAfterTerminate();
     }
 
     // TODO: Disable the random graph maybe after the selection of the build graph
-    // TODO: After Generate graoh allow user to build a graph without page blank ----> SOLVED
     // TODO: Erase the colors of the graph after the algorithm finish and the build graph occured
     // TODO: Make Kruskal undefined after the Prim alg selected.
     // TODO: Make adjustements after the Kruskal alg proccedd after the prim was executed
-    // TODO: Add the sum of the weights
     // TODO: Maybe better structure ??
 
     return (
         <>
+            
             <div id="cy" style={{ width: 'auto', height: '650px', backgroundColor: 'white' }}>
                 {
                     (props.primStarting.option == "stepByStep" || props.primStarting.option == "finalGraph") &&
                     <div style={{ position: 'absolute', top: '10px', left: '10px', backgroundColor: 'white', padding: '5px', zIndex: 10 }}>
-                        <Tag style={{marginTop: 5}} color="cyan">Prim's Algorithm</Tag>
+                        <Tag style={{marginTop: 5}} color="cyan">Prim's algorithm</Tag>
                         <Tag style={{marginTop: 5}} color="green">Source: {props.primStarting.startingNode}</Tag>
                         <Tag style={{marginTop: 5}} color="red">Weights: {totalWeigthsAre}</Tag>
+                        <Tag 
+                            style={{marginTop: 5}} 
+                            color="orange"
+                        >
+                            {props.primStarting.option === "stepByStep" ? 'Step by step execution' : 'Final execution'}
+                        </Tag>
                     </div>
                 }
                 {
                     (props.kruskalConfigurations.option == "stepByStep" || props.kruskalConfigurations.option == "finalGraph") &&
                     <div style={{ position: 'absolute', top: '10px', left: '10px', backgroundColor: 'white', padding: '5px', zIndex: 10 }}>
-                        <Tag style={{marginTop: 5}} color="cyan">Kruskal's Algorithm</Tag>
+                        <Tag style={{marginTop: 5}} color="cyan">Kruskal's algorithm</Tag>
                         <Tag style={{marginTop: 5}} color="red">Weights: {totalWeigthsAre}</Tag>
+                        <Tag 
+                            style={{marginTop: 5}} 
+                            color="orange"
+                        >
+                            { props.kruskalConfigurations.option === "stepByStep" ? 'Step by step execution' : 'Final execution'}
+                        </Tag>
                     </div>
                 }
             </div>
