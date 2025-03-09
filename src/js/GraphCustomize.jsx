@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Button, Input, Modal, Form, Slider, Radio, Tag } from 'antd'
+import { Button, Input, Modal, Form, Slider, Radio, Card, Typography, Divider, Grid } from 'antd'
 
 function GraphCustomize(props) {
 
@@ -11,11 +11,17 @@ function GraphCustomize(props) {
     const [rangeValues, setRangeValues] = useState([20, 50]);
     const [probabilityRange, setprobabilityRange] = useState(0.5);
 
+    const { Title, Paragraph } = Typography;
+    const { useBreakpoint } = Grid;
+
+    const breakpoints = useBreakpoint(); // Get current screen size
+
     const submitRandomGraph = (values) => {
         values.range = rangeValues
         values.probEdges = probabilityRange
         setRandonGraph(false)
         props.randomGraphCustomize(values)
+
     }
 
     const submitEdgesAndWeights = (values) => {
@@ -27,13 +33,11 @@ function GraphCustomize(props) {
     const submitPrimSelections = (value) => {
         setShowPrim(false)
         props.primStartingPoint(value)
-        // props.cleanKruskalStatesAfterTerminate()
     }
 
     const submitKruskalSelections = (value) => {
         setShowKruskal(false)
         props.kruskalConfigurations(value)
-        // props.cleanPrimStatesAfterTerminate()
     }
 
     const marks = {
@@ -53,8 +57,7 @@ function GraphCustomize(props) {
                 footer={[]}
             >
                 <Form 
-                    onFinish={submitRandomGraph} 
-                    // style={{ marginTop: '20px', flexDirection: 'column', display: 'flex' }}
+                    onFinish={submitRandomGraph}
                 >
                     <Form.Item
                         name={"nodes"}
@@ -278,29 +281,43 @@ function GraphCustomize(props) {
     }
 
     return (
-        <div 
-            style={{
-                textAlign: "center",
-            }}
+        <Card 
+            title={<div style={{ textAlign: 'center', width: '100%' }}>Graph Customization</div>}
+            variant='outlined' 
+            style={{ width: "100%", background: "#ffffff", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", borderRadius: 10 }}
         >
-            <h2>Customize Graph</h2>
+            <Title level={4} style={{ textAlign: "center" }}>Which graph do you want to execute the algorithm on?</Title>
+
+            <Paragraph style={{ textAlign: "center", fontSize: "14px", color: "#666" }}>
+                You can either <strong><em>build your own graph</em></strong> by adding nodes and edges, or <strong><em>generate a random graph</em></strong>.  
+                Once you've created a graph, you can apply Minimum Spanning Tree (MST) algorithms.
+            </Paragraph>
+
+            <Divider />
+
+            <Title level={5} style={{ textAlign: "center" }}>Build or Generate a Graph</Title>
+
             <div 
                 style={{ 
-                    display: 'flex',
-                    justifyContent: 'center',
-                    marginTop: '10px' /* Adjust margin as needed */
+                    display: 'flex', 
+                    flexWrap: 'wrap', 
+                    justifyContent: 'center', 
+                    gap: '10px', 
+                    marginBottom: '20px' 
                 }}
             >
                 <Button 
                     type="primary"
                     style={{ marginRight: '10px' }}
                     onClick={() => setBuildGraph(!buildGraph)}
+                    block={breakpoints.xs}
                 >
                     Build Graph
                 </Button>
                 <Button 
                     type="primary"
                     onClick={() => {setRandonGraph(true), setBuildGraph(false)}}
+                    block={breakpoints.xs}
                 >
                     Generate Graph
                 </Button>
@@ -311,35 +328,57 @@ function GraphCustomize(props) {
             }
             {
                 buildGraph &&
-                    <div>
-                        <h3>Build you own graph</h3>
-                        <Button 
-                            type="primary"
-                            style={{ marginRight: '10px' }}
-                            onClick={() => props.addNodePressed()}
-                        >
-                            Insert Node
-                        </Button>
-                        <Button 
-                            type="primary"
-                            style={{ marginRight: '10px' }}
-                            onClick={() => setBuildGraphModal(true)}
-                        >
-                            Insert edges and weights
-                        </Button>
-                    </div>
+                <Card 
+                    title="Build Your Own Graph" 
+                    variant={false} 
+                    style={{ 
+                        background: "#f9f9f9", 
+                        borderRadius: 8, 
+                        padding: breakpoints.xs ? "5px" : "10px"
+                    }}
+                >
+                    <Paragraph style={{ fontSize: breakpoints.xs ? "12px" : "14px" }}>
+                        Add nodes and define edges with their respective weights to create your graph manually.
+                    </Paragraph>
+                    <Button 
+                        type="primary"
+                        style={{ marginRight: '10px' }}
+                        onClick={() => props.addNodePressed()}
+                        block={breakpoints.xs}
+                    >
+                        Insert Node
+                    </Button>
+                    <Button 
+                        type="primary"
+                        style={{ marginRight: '10px' }}
+                        onClick={() => setBuildGraphModal(true)}
+                        block={breakpoints.xs}
+                    >
+                        Insert edges and weights
+                    </Button>
+                </Card>
             }
             {
                 buildGraphModal && 
                     addYourEdgesAndWeights()
             }
-            <div style={{paddingTop: 10}}>
-                <h2>Apply MST Algoriths</h2>
+            <Divider />
+
+            <Title level={5} style={{ textAlign: "center" }}>Run MST Algorithm</Title>
+            <Paragraph style={{ textAlign: "center", fontSize: breakpoints.xs ? "12px" : "14px", color: "#666" }}>
+                After creating a graph, you can apply the <strong><em>Kruskal</em></strong> 
+                or <strong><em>Prim</em></strong> algorithm 
+                to find the Minimum Spanning Tree (MST).
+            </Paragraph>
+            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '10px' }}>
+                {/* <h2>Apply MST Algoriths</h2> */}
                 {/* <p>Kryskal</p> */}
                 <Button 
                     type="primary"
                     style={{ marginRight: '10px' }}
                     onClick={() => setShowKruskal(true)}
+                    disabled={!props.finishCustomize == true}
+                    block={breakpoints.xs}
                 >
                     Kruskal
                 </Button>
@@ -347,7 +386,8 @@ function GraphCustomize(props) {
                     type="primary"
                     style={{ marginRight: '10px' }}
                     onClick={() => setShowPrim(true)}
-                    // disabled={buildGraphModal == false}
+                    disabled={!props.finishCustomize == true}
+                    block={breakpoints.xs}
                 >
                     Prim
                 </Button>
@@ -360,7 +400,8 @@ function GraphCustomize(props) {
                 showKruskal &&
                     kruskalOnSteroids()
             }
-        </div>
+        {/* </div> */}
+        </Card>
     )
 }
 
