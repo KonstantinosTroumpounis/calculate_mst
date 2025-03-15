@@ -527,7 +527,7 @@ function GraphTheory(props) {
                 disabled={props.primStarting.option === "stepByStep" && step<primResults.length}
                 style={{marginTop: 10}}
             >
-                Clear Graph
+                Clear graph
             </Button>
             {
                     ((props.primStarting.option == "stepByStep" && step < primResults.length) || 

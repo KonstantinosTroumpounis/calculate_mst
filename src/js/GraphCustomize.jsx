@@ -329,7 +329,7 @@ function GraphCustomize(props) {
             {
                 buildGraph &&
                 <Card 
-                    title="Build Your Own Graph" 
+                    title="Build your own graph" 
                     variant={false} 
                     style={{ 
                         background: "#f9f9f9", 
@@ -340,22 +340,24 @@ function GraphCustomize(props) {
                     <Paragraph style={{ fontSize: breakpoints.xs ? "12px" : "14px" }}>
                         Add nodes and define edges with their respective weights to create your graph manually.
                     </Paragraph>
-                    <Button 
-                        type="primary"
-                        style={{ marginRight: '10px' }}
-                        onClick={() => props.addNodePressed()}
-                        block={breakpoints.xs}
-                    >
-                        Insert Node
-                    </Button>
-                    <Button 
-                        type="primary"
-                        style={{ marginRight: '10px' }}
-                        onClick={() => setBuildGraphModal(true)}
-                        block={breakpoints.xs}
-                    >
-                        Insert edges and weights
-                    </Button>
+                    <div style={{ display: 'flex', gap: '10px' }}>
+                        <Button 
+                            type="primary"
+                            style={{ marginRight: '10px' }}
+                            onClick={() => props.addNodePressed()}
+                            block={breakpoints.xs}
+                        >
+                            Node
+                        </Button>
+                        <Button 
+                            type="primary"
+                            style={{ marginRight: '10px' }}
+                            onClick={() => setBuildGraphModal(true)}
+                            block={breakpoints.xs}
+                        >
+                            Edges and weights
+                        </Button>
+                    </div>
                 </Card>
             }
             {
