@@ -7,7 +7,8 @@ function App() {
     const [addNode, setAddNode] = useState(false)
     const [finishCustomize, setFinishCustomize] = useState(false)
     const [buildOwnGraphPressed, setbuildOwnGraphPressed] = useState(false)
-    const [isAlgorithmFinished, setIsAlgorithmFinished] = useState(false);
+    const [isAlgorithmFinished, setIsAlgorithmFinished] = useState(false)
+    const [isGraphDownloaded, setisGraphDownloaded] = useState(false)
     const [runningAlgorithm, setRunningAlgorithm] = useState('')
     const [randomGraph, setRandomGraph] = useState({
         numberOfNodes: undefined,
@@ -74,6 +75,7 @@ function App() {
 
     const cleanAlgorithmStatesAfterTerminate = () => {
         setIsAlgorithmFinished(false)
+        setisGraphDownloaded(true)
         setRunningAlgorithm('')
         setStarterPrim({
             startingNode: undefined,
@@ -87,6 +89,10 @@ function App() {
 
     const algorithmFinished = () => {
         setIsAlgorithmFinished(true)
+    }
+
+    const downloadGraph = () => {
+        setisGraphDownloaded(true)
     }
     
 
@@ -110,6 +116,8 @@ function App() {
                                     buildGraphCustomize={buildGraphCustomize}
                                     primStartingPoint={primStartingPoint}
                                     kruskalConfigurations={kruskalConfigurations}
+                                    isAlgorithmFinished={isAlgorithmFinished}
+                                    downloadGraph={downloadGraph}
                                 />
                             </Sider>
                         </Col>
@@ -128,6 +136,7 @@ function App() {
                                     isAlgorithmFinished={isAlgorithmFinished}
                                     algorithmFinished={algorithmFinished}
                                     runningAlgorithm={runningAlgorithm}
+                                    isGraphDownloaded={isGraphDownloaded}
                                 />
                             </Content>
                         </Col>

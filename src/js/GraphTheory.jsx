@@ -582,6 +582,20 @@ function GraphTheory(props) {
     props.cleanAlgorithmStatesAfterTerminate();
   };
 
+  const downloadImg = () => {
+    const imageData = cy.png({ full: true }); // Export as PNG
+    const link = document.createElement("a");
+    link.href = imageData;
+    link.download = "graph.png";
+    link.click()
+  }
+
+  useEffect(() => {
+    if (props.isGraphDownloaded) {
+      downloadImg();
+    }
+  }, [props.isGraphDownloaded]); 
+
   // TODO: Erase the colors of the graph after the algorithm finish and the build graph occured
   // TODO: Make Kruskal undefined after the Prim alg selected.
   // TODO: Maybe better structure ??
@@ -709,22 +723,6 @@ function GraphTheory(props) {
           <StepForwardOutlined />
         </Button>
       )}
-      {
-        <Button
-          type="primary"
-          shape="circle"
-          style={{ marginLeft: 4 }}
-          onClick={() => {
-            const imageData = cy.png({ full: true }); // Export as PNG
-            const link = document.createElement("a");
-            link.href = imageData;
-            link.download = "graph.png";
-            link.click();
-          }}
-        >
-          <DownloadOutlined />
-        </Button>
-      }
     </>
   );
 }

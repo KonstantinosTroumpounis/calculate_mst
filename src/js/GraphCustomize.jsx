@@ -394,6 +394,22 @@ function GraphCustomize(props) {
                     Prim
                 </Button>
             </div>
+
+            <Divider />
+            <Paragraph style={{ textAlign: "center", fontSize: breakpoints.xs ? "12px" : "14px", color: "#666" }}>
+                In the end you can download the MST calculated graph
+            </Paragraph>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <Button 
+                        type="primary"
+                        style={{ marginRight: '10px' }}
+                        onClick={() => props.downloadGraph()}
+                        disabled={!props.isAlgorithmFinished}
+                        block={breakpoints.xs}
+                    >
+                        Download graph
+                </Button>
+            </div>
             {
                 showPrim &&
                     primOnSteroids()
