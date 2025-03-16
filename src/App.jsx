@@ -7,6 +7,8 @@ function App() {
     const [addNode, setAddNode] = useState(false)
     const [finishCustomize, setFinishCustomize] = useState(false)
     const [buildOwnGraphPressed, setbuildOwnGraphPressed] = useState(false)
+    const [isAlgorithmFinished, setIsAlgorithmFinished] = useState(false);
+    const [runningAlgorithm, setRunningAlgorithm] = useState('')
     const [randomGraph, setRandomGraph] = useState({
         numberOfNodes: undefined,
         numberOfVertices: undefined,
@@ -54,6 +56,8 @@ function App() {
     }
 
     const primStartingPoint = (data) => {
+        setIsAlgorithmFinished(false)
+        setRunningAlgorithm('prim')
         setStarterPrim({
             startingNode: data.startingNode,
             option: data.primCustomize
@@ -61,12 +65,16 @@ function App() {
     }
 
     const kruskalConfigurations = (data) => {
+        setIsAlgorithmFinished(false)
+        setRunningAlgorithm('kruskal')
         setKruskalAlg({
             option: data.kruskalCustomize
         })
     }
 
     const cleanAlgorithmStatesAfterTerminate = () => {
+        setIsAlgorithmFinished(false)
+        setRunningAlgorithm('')
         setStarterPrim({
             startingNode: undefined,
             options: undefined
@@ -75,6 +83,10 @@ function App() {
             options: undefined
         })
         setFinishCustomize(false)
+    }
+
+    const algorithmFinished = () => {
+        setIsAlgorithmFinished(true)
     }
     
 
@@ -113,6 +125,9 @@ function App() {
                                     primStarting={starterPrim}
                                     kruskalConfigurations={kruskalAlg}
                                     cleanAlgorithmStatesAfterTerminate={cleanAlgorithmStatesAfterTerminate}
+                                    isAlgorithmFinished={isAlgorithmFinished}
+                                    algorithmFinished={algorithmFinished}
+                                    runningAlgorithm={runningAlgorithm}
                                 />
                             </Content>
                         </Col>
