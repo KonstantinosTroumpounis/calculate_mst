@@ -282,20 +282,20 @@ function GraphCustomize(props) {
 
     return (
         <Card 
-            title={<div style={{ textAlign: 'center', width: '100%' }}>Graph customization</div>}
+            title={<h2 style={{ textAlign: 'center', width: '100%' }}>Generate Instance</h2>}
             variant='outlined' 
             style={{ width: "100%", background: "#ffffff", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", borderRadius: 10 }}
         >
-            <Title level={4} style={{ textAlign: "center" }}>Which graph do you want to execute the algorithm on?</Title>
+            {/* <Title level={4} style={{ textAlign: "center" }}>Which graph do you want to execute the algorithm on?</Title> */}
 
-            <Paragraph style={{ textAlign: "center", fontSize: "14px", color: "#666" }}>
+            {/* <Paragraph style={{ textAlign: "center", fontSize: "14px", color: "#666" }}>
                 You can either <strong><em>build your own graph</em></strong> by adding nodes and edges, or <strong><em>generate a random graph</em></strong>.  
                 Once you've created a graph, you can apply minimum spanning tree (MST) algorithms.
-            </Paragraph>
+            </Paragraph> */}
 
-            <Divider />
+            {/* <Divider /> */}
 
-            <Title level={5} style={{ textAlign: "center" }}>Build or generate a graph</Title>
+            {/* <Title level={5} style={{ textAlign: "center" }}>Build or generate a graph</Title> */}
 
             <div 
                 style={{ 
@@ -366,12 +366,12 @@ function GraphCustomize(props) {
             }
             <Divider />
 
-            <Title level={5} style={{ textAlign: "center" }}>Run MST algorithm</Title>
-            <Paragraph style={{ textAlign: "center", fontSize: breakpoints.xs ? "12px" : "14px", color: "#666" }}>
+            {/* <Title level={5} style={{ textAlign: "center" }}>Run MST algorithm</Title> */}
+            {/* <Paragraph style={{ textAlign: "center", fontSize: breakpoints.xs ? "12px" : "14px", color: "#666" }}>
                 After creating a graph, you can apply the <strong><em>Kruskal</em></strong> or
                 <strong style={{marginLeft: 3}}><em>Prim</em></strong> algorithm 
                 to find the minimum spanning tree (MST).
-            </Paragraph>
+            </Paragraph> */}
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '10px' }}>
                 {/* <h2>Apply MST Algoriths</h2> */}
                 {/* <p>Kryskal</p> */}
@@ -382,23 +382,28 @@ function GraphCustomize(props) {
                     disabled={!props.finishCustomize == true}
                     block={breakpoints.xs}
                 >
-                    Kruskal
+                    Kruskal's
                 </Button>
                 <Button 
                     type="primary"
                     style={{ marginRight: '10px' }}
+                    // style={{ 
+                    //     marginRight: '10px', 
+                    //     backgroundColor: props.runningAlgorithm === 'prim' ? 'orange' : '', 
+                    //     color: props.runningAlgorithm === 'prim' ? 'white' : '' // Ensure text is visible
+                    // }}
                     onClick={() => setShowPrim(true)}
                     disabled={!props.finishCustomize == true}
                     block={breakpoints.xs}
                 >
-                    Prim
+                    Prim's
                 </Button>
             </div>
 
             <Divider />
-            <Paragraph style={{ textAlign: "center", fontSize: breakpoints.xs ? "12px" : "14px", color: "#666" }}>
+            {/* <Paragraph style={{ textAlign: "center", fontSize: breakpoints.xs ? "12px" : "14px", color: "#666" }}>
                 In the end you can download the MST calculated graph
-            </Paragraph>
+            </Paragraph> */}
             <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <Button 
                         type="primary"

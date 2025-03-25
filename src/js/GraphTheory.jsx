@@ -520,7 +520,8 @@ function GraphTheory(props) {
   }, [step]);
 
   const getAlgorithStepByStep = (algorunning) => {
-    const selectedAlg = algorunning === "prim" ? primResults : kruskalResults;
+    console.log('algorunning :',  algorunning)
+    const selectedAlg =  props.runningAlgorithm == "prim" ? primResults : kruskalResults
 
     cy.$(`#${selectedAlg[step].data.id}`).style({
       "line-color": "orange",
@@ -583,10 +584,12 @@ function GraphTheory(props) {
   };
 
   const downloadImg = () => {
+    let currDate = new Date().toLocaleDateString();
+    let currTime = new Date().toLocaleTimeString();
     const imageData = cy.png({ full: true }); // Export as PNG
     const link = document.createElement("a");
     link.href = imageData;
-    link.download = "graph.png";
+    link.download = `mst_${props.runningAlgorithm}_${currDate}_${currTime}.png`;
     link.click()
   }
 
@@ -684,8 +687,8 @@ function GraphTheory(props) {
             }}
           >
             <Segmented
-              options={["Initial graph", "Final MST graph"]}
-              value={graphView == 0 ? "Final MST graph" : "Initial graph"}
+              options={["Initial graph", "Computed MST"]}
+              value={graphView == 0 ? "Computed MST" : "Initial graph"}
               onChange={toggleInitCompletedGraph}
             />
           </div>
