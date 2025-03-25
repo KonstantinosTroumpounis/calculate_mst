@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 function LanguageSelector() {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
 
   const [selectedLanguage, setSelectedLanguage] = useState("en");
 
@@ -34,7 +34,7 @@ function LanguageSelector() {
           color: selectedLanguage === "en" ? "orange" : "white",
         }}
       >
-        EN
+        {t('English')}
       </h3>
       <span style={{ fontWeight: "bold", color: "white" }}>|</span>
       <h3
@@ -44,7 +44,7 @@ function LanguageSelector() {
           color: selectedLanguage === "gr" ? "orange" : "white",
         }}
       >
-        EL
+        {t('Greek')}
       </h3>
     </div>
   );

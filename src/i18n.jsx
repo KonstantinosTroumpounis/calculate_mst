@@ -15,8 +15,7 @@ i18n
       caches: ["localStorage", "cookie"],
     },
     backend: {
-      loadPath: "/calculate_mst/locales/{{lng}}/translation.json",
-      crossDomain: true
+      loadPath: "/calculate_mst/locales/{{lng}}/translation.json"
     },
     interpolation: {
       escapeValue: false, // React already escapes content
