@@ -15,7 +15,7 @@ i18n
       caches: ["localStorage", "cookie"],
     },
     backend: {
-      loadPath: 'https://konstantinostroumpounis.github.io/calculate_mst/locales/{{lng}}/translation.json',
+      loadPath: "/calculate_mst/locales/{{lng}}/translation.json",
       crossDomain: true
     },
     interpolation: {
