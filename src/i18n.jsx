@@ -15,7 +15,8 @@ i18n
       caches: ["localStorage", "cookie"],
     },
     backend: {
-      loadPath: '/locales/{{lng}}/translation.json',
+      loadPath: 'https://konstantinostroumpounis.github.io/calculate_mst/locales/{{lng}}/translation.json',
+      crossDomain: true
     },
     interpolation: {
       escapeValue: false, // React already escapes content
