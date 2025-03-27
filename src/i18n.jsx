@@ -3,7 +3,8 @@ import { initReactI18next } from "react-i18next";
 import HttpApi from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 
-const basePath = window.location.origin + window.location.pathname.replace(/\/$/, "");
+import common_en from '../public/locales/en/translation.json'
+import common_gr from '../public/locales/gr/translation.json'
 
 i18n
   .use(HttpApi)
@@ -16,9 +17,18 @@ i18n
       order: ["querystring", "cookie", "localStorage", "navigator", "htmlTag"],
       caches: ["localStorage", "cookie"],
     },
-    backend: {
-      loadPath: `${basePath}/locales/{{lng}}/translation.json`
+    // backend: {
+    //   loadPath: "/calculate_mst/locales/{{lng}}/translation.json"
+    // },
+    resources: {
+      en: {
+        common: common_en,
+      },
+      gr: {
+        common: common_gr,
+      },
     },
+    ns: ["common"],
     interpolation: {
       escapeValue: false, // React already escapes content
     },
