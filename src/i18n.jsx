@@ -3,6 +3,8 @@ import { initReactI18next } from "react-i18next";
 import HttpApi from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 
+const basePath = window.location.origin + window.location.pathname.replace(/\/$/, "");
+
 i18n
   .use(HttpApi)
   .use(LanguageDetector)
@@ -15,7 +17,7 @@ i18n
       caches: ["localStorage", "cookie"],
     },
     backend: {
-      loadPath: "/calculate_mst/locales/{{lng}}/translation.json"
+      loadPath: `${basePath}/locales/{{lng}}/translation.json`
     },
     interpolation: {
       escapeValue: false, // React already escapes content
